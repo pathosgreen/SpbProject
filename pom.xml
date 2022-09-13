@@ -11,8 +11,9 @@
 	<groupId>com.shop</groupId>
 	<artifactId>shop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>shop</name>
-	<description>Shop Project for Spring Boot</description>
+	<packaging>war</packaging>
+	<name>SpringProject</name>
+	<description>Fresh Fruit Shop web site</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
