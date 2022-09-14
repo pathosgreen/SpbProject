@@ -1,1 +1,1 @@
-web: java -jar program/shop.jar
+web:java -jar program/shop.jar
