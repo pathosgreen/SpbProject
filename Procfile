@@ -1,1 +1,1 @@
-web: java -jar target/test-0.0.1-SNAPSHOT.jar
+web: java -Dspring.server.port=80 -Dspring.profiles.active=production $JAVA_OPTS -jar test-0.0.1-SNAPSHOT.jar
