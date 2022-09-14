@@ -11,7 +11,7 @@
 	<groupId>com.shop</groupId>
 	<artifactId>shop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+<!--	<packaging>war</packaging>-->
 	<name>SpringProject</name>
 	<description>Fresh Fruit Shop web site</description>
 	<properties>
