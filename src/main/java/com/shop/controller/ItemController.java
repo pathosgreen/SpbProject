@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +31,15 @@ public class ItemController {
 
     @GetMapping(value = "/admin/item/new")
     public String itemForm(Model model){
+        File shop = new File("c:\\shop\\item");
+        if(!shop.exists()) {shop.mkdirs();}
         model.addAttribute("itemFormDto", new ItemFormDto());
         return "item/itemForm";
     }
 
     @PostMapping(value = "/admin/item/new")
-    public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult, Model model, @RequestParam("itemImgFile")List<MultipartFile> itemImgFileList){
+    public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult, Model model,
+                          @RequestParam("itemImgFile")List<MultipartFile> itemImgFileList){
 
         if(bindingResult.hasErrors()){
             return "item/itemForm";
@@ -70,7 +74,8 @@ public class ItemController {
     }
 
     @PostMapping(value = "/admin/item/{itemId}")
-    public String itemUpdate(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,@RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Model model){
+    public String itemUpdate(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
+                             @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Model model){
 
         if(bindingResult.hasErrors()){
             return "item/itemForm";
@@ -93,6 +98,9 @@ public class ItemController {
 
     @GetMapping(value = {"/admin/items","/admin/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
+
+        File shop = new File("c:\\shop\\item");
+        if(!shop.exists()) {shop.mkdirs();}
 
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,3);
         Page<Item> items = itemService.getAdminItemPage(itemSearchDto,pageable);
