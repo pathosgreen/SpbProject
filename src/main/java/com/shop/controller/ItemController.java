@@ -31,6 +31,7 @@ public class ItemController {
 
     @GetMapping(value = "/admin/item/new")
     public String itemForm(Model model){
+        // 폴더가 없으면 파일을 저장할 폴더 생성
         File shop = new File("c:\\shop\\item");
         if(!shop.exists()) {shop.mkdirs();}
         model.addAttribute("itemFormDto", new ItemFormDto());
@@ -40,7 +41,7 @@ public class ItemController {
     @PostMapping(value = "/admin/item/new")
     public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult, Model model,
                           @RequestParam("itemImgFile")List<MultipartFile> itemImgFileList){
-
+        // 상품 등록 오류 체크
         if(bindingResult.hasErrors()){
             return "item/itemForm";
         }
@@ -63,6 +64,7 @@ public class ItemController {
     public String itemDtl(@PathVariable("itemId") Long itemId,Model model){
 
         try {
+            // 선택한 상품 번호의 상품 데이터를 받아 보여줌
             ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
             model.addAttribute("itemFormDto",itemFormDto);
         }catch (EntityNotFoundException e){
@@ -76,7 +78,7 @@ public class ItemController {
     @PostMapping(value = "/admin/item/{itemId}")
     public String itemUpdate(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
                              @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Model model){
-
+        // 상품 수정 오류 체크
         if(bindingResult.hasErrors()){
             return "item/itemForm";
         }
@@ -98,7 +100,7 @@ public class ItemController {
 
     @GetMapping(value = {"/admin/items","/admin/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
-
+        // 폴더가 없으면 파일을 저장할 폴더 생성
         File shop = new File("c:\\shop\\item");
         if(!shop.exists()) {shop.mkdirs();}
 

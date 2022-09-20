@@ -60,14 +60,14 @@ public class CartService {
     public List<CartDetailDto> getCartList(String email){
 
         List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
-
+        // email 을 이용해 회원 정보를 불러오고 회원의 id(email)을 이용해 카트 정보를 불러옴
         Member member = memberRepository.findByEmail(email);
         Cart cart = cartRepository.findByMemberId(member.getId());
-
+        // 카트가 비어있으면 등록 과정 없이 바로 반환
         if (cart == null){
             return cartDetailDtoList;
         }
-
+        // 리스트에 카트 내용 등록
         cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.getId());
 
         return cartDetailDtoList;
@@ -79,7 +79,7 @@ public class CartService {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(EntityNotFoundException::new);
         Member savedMember = cartItem.getCart().getMember();
-
+        // 카트에 등록하려는 이메일과 로그인한 이메일이 일치하지 않으면 실패처리
         if(!StringUtils.equals(curMember.getEmail(),savedMember.getEmail())){
             return false;
         }

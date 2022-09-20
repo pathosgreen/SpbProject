@@ -49,14 +49,14 @@ public class ItemService {
 
     @Transactional(readOnly = true)
     public ItemFormDto getItemDtl(Long itemId){
-
         List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
         List<ItemImgDto> itemImgDtoList = new ArrayList<>();
+        // 리스트의 이미지 불러오기
         for (ItemImg itemImg : itemImgList){
             ItemImgDto itemImgDto = ItemImgDto.of(itemImg);
             itemImgDtoList.add(itemImgDto);
         }
-
+        // itemId로 상품 조회 
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(EntityNotFoundException::new);
         ItemFormDto itemFormDto = ItemFormDto.of(item);

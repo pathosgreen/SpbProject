@@ -28,7 +28,7 @@ public class OrderController {
 
     @PostMapping(value = "/order")
     public @ResponseBody ResponseEntity order (@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult, Principal principal){
-
+        // 구매 등록 오류 체크
         if (bindingResult.hasErrors()){
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
